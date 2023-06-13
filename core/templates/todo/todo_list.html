@@ -1,0 +1,39 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body, .center {
+                text-align: center;
+            }
+            ul {
+                list-style: none !important;
+            }
+            .card{
+                margin: 20px auto !important;
+                width: 20%;
+                border: 1px solid #ac8b13;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center">
+            <a href="{% url 'logout' %}"> logout</a>
+        </div>
+        <h1>Todo List:</h1>
+        <div class="card">
+            <a href="{% url 'todo-create' %}">
+                <h3>+ Add Todo </h3>
+            </a>
+        </div>
+        {% for todo in object_list %}
+        <div class="card">
+            <h3>{{ todo.title }} </h3>
+            <h4> {{ todo.created_time|date }} - {{ todo.created_time|time }}
+            </h4>
+        </div>
+        {% endfor %}
+
+    </body>
+</html>
