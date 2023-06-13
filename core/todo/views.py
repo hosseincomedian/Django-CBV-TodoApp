@@ -27,6 +27,9 @@ class TodoCreateView(LoginRequiredMixin, CreateView):
 
 
 class TodoCompleteView(LoginRequiredMixin, View):
+    '''
+    use by JS
+    '''
     def post(self, request, *args, **kwargs):
         todo = Todo.objects.get(pk=request.POST.get('todo_id'))
         todo.complete = not todo.complete
