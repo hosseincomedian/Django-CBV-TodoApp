@@ -73,3 +73,22 @@ class ActivationResendApiView(generics.GenericAPIView):
     def get_token(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
+    
+class ChangePasswordApiView(generics.GenericAPIView):
+    serializer_class = serializers.ChangePasswordSerializer
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response({'details': 'Password updated successfully'})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
