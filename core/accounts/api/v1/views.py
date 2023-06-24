@@ -41,8 +41,7 @@ class RegistrationApiView(generics.GenericAPIView):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
 
-class ActivationApiView(generics.GenericAPIView):
-    
+class ActivationApiView(generics.GenericAPIView):    
     def get(self, request, token):
         try:
             token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
@@ -57,3 +56,20 @@ class ActivationApiView(generics.GenericAPIView):
         user_obj.is_verified = True
         user_obj.save()
         return Response(token, status=status.HTTP_200_OK)
+
+class ActivationResendApiView(generics.GenericAPIView):
+    serializer_class = serializers.ActivationResendSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        user = get_object_or_404(User, email = serializer.validated_data['email'])
+        if user.is_verified:
+            return Response({'details':'user is already verified'}, status=status.HTTP_400_BAD_REQUEST)
+        token = self.get_token(user)
+        email_obj = EmailMessage('email/activation_email.tpl', {'token': token}, "ho@gmail.com", to=[user.email])
+        EmailThread(email_obj).start()
+        return Response({"details": "email sent"}, status=status.HTTP_200_OK) 
+        
+    def get_token(self, user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)

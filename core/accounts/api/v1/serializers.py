@@ -24,3 +24,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password1', None)
         return User.objects.create_user(**validated_data)
+    
+class ActivationResendSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        try:
+            user = User.objects.get(email=attrs.get('email'))
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"details": "email does not exist"})
+        return super().validate(attrs)
