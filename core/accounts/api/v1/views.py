@@ -10,6 +10,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 import jwt
 from django.conf import settings
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -92,3 +94,25 @@ class ChangePasswordApiView(generics.GenericAPIView):
     def get_object(self, queryset=None):
         obj = self.request.user
         return obj
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    serializer_class = serializers.CustomAuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email
+        })
+
+
+class TokenLogoutApiView(generics.GenericAPIView):
+
+    def get(self, request, *args, **kwargs):
+        request.user.auth_token.delete()
+        return Response({ 'details' : 'User Logged out successfully'}, status = status.HTTP_200_OK) 

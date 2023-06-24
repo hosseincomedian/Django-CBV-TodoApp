@@ -9,5 +9,9 @@ urlpatterns = [
 
     path('change-password/', views.ChangePasswordApiView.as_view(), name='change-password'),
 
-    path('test/', views.test.as_view()),
+    path('token/login/', views.CustomObtainAuthToken.as_view(), name='token-login'),
+    path('token/logout/', views.TokenLogoutApiView.as_view(), name='token-logout'),
+
+
+
 ]
