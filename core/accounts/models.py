@@ -19,7 +19,8 @@ class UserManager(BaseUserManager):
         kwargs.setdefault('is_staff', True)
         kwargs.setdefault('is_superuser', True)
         kwargs.setdefault('is_active', True)
-        
+        kwargs.setdefault('is_verified', True)
+
         if kwargs.get('is_staff') is not True:
             raise ValueError(_("superuser must be staff")) 
         if kwargs.get('is_superuser') is not True:
@@ -28,14 +29,12 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **kwargs)       
 
 
-
-
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     is_superusername = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    # is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -46,7 +45,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
-
-
-
 
