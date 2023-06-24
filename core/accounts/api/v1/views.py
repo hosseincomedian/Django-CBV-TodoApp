@@ -12,6 +12,7 @@ import jwt
 from django.conf import settings
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 User = get_user_model()
 
@@ -116,3 +117,6 @@ class TokenLogoutApiView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         request.user.auth_token.delete()
         return Response({ 'details' : 'User Logged out successfully'}, status = status.HTTP_200_OK) 
+    
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = serializers.CustomTokenObtainPairSerializer
