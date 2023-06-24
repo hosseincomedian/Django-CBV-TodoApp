@@ -7,3 +7,5 @@ django-filter
 drf-yasg[validation]
 django-coreapi
 djoser
+django-mail-templated
+djangorestframework-simplejwt[crypto]
