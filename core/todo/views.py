@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, View
 from .models import Todo
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,8 +15,8 @@ class TodoListView(LoginRequiredMixin, ListView):
 
 class TodoCreateView(LoginRequiredMixin, CreateView):
     model = Todo
-    fields = ["title", 'complete']
-    success_url = reverse_lazy('todo-list')
+    fields = ["title", "complete"]
+    success_url = reverse_lazy("todo-list")
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -27,11 +26,12 @@ class TodoCreateView(LoginRequiredMixin, CreateView):
 
 
 class TodoCompleteView(LoginRequiredMixin, View):
-    '''
+    """
     use by JS
-    '''
+    """
+
     def post(self, request, *args, **kwargs):
-        todo = Todo.objects.get(pk=request.POST.get('todo_id'))
+        todo = Todo.objects.get(pk=request.POST.get("todo_id"))
         todo.complete = not todo.complete
         todo.save()
         return HttpResponse("ok")
@@ -44,15 +44,14 @@ class TodoUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, *args, **kwargs):
         print("ok")
-        todo = get_object_or_404(Todo,
-                                 pk=self.kwargs.get('pk'), user=self.request.user)
-        return super().get_object()
+        todo = get_object_or_404(Todo, pk=self.kwargs.get("pk"), user=self.request.user)
+        return todo
 
 
 class TodoDeleteView(LoginRequiredMixin, DeleteView):
     model = Todo
-    success_url = reverse_lazy("todo-list")    
+    success_url = reverse_lazy("todo-list")
+
     def get_object(self, *args, **kwargs):
-        todo = get_object_or_404(Todo,
-                                 pk=self.kwargs.get('pk'), user=self.request.user)
-        return super().get_object()
+        todo = get_object_or_404(Todo, pk=self.kwargs.get("pk"), user=self.request.user)
+        return todo
