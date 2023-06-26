@@ -18,3 +18,4 @@ jobs:
       run: docker-compose ip -d
     -name: run tests
       run: docker exec backend sh -c "pytest && flake8 ."
+      
