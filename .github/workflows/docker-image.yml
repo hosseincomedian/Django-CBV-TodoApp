@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker-compose up -d
     - name: run tests
-      run: docker-compose exec backend sh -c "pytest && flake8 ."
+      run: docker exec backend sh -c "pytest && flake8 ."
