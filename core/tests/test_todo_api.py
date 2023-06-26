@@ -37,7 +37,7 @@ class TestTodoList:
     def test_create_todo_response_201_status(self, get_client, get_user):
         url = reverse("todo-list")
         user = get_user
-        get_client.force_authenticate(user=user)
+        get_client.force_authenticate(user=user) 
         data = {"title": "reading books"}
         response = get_client.post(url, data)
         assert response.status_code == 201
