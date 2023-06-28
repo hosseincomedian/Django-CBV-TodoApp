@@ -22,4 +22,4 @@ class Command(BaseCommand):
                 user=user,
                 title=self.fake.paragraph(nb_sentences=1),
                 complete=random.choice([True, False]),
-            )
+            ) 
