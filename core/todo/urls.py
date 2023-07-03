@@ -7,6 +7,7 @@ from .views import (
     TodoDeleteView,
 )
 
+
 urlpatterns = [
     path("", TodoListView.as_view(), name="todo-list"),
     path("create/", TodoCreateView.as_view(), name="todo-create"),
@@ -15,3 +16,6 @@ urlpatterns = [
     path("delete/<int:pk>/", TodoDeleteView.as_view(), name="todo-delete"),
     path("api/v1/", include("todo.api.v1.urls")),
 ]
+
+
+
