@@ -5,6 +5,6 @@
 # def setup_periodic_tasks(sender, **kwargs):
 #     sender.add_periodic_task(
 #         10,
-#         Delete_completed_tasks.s(), 
+#         Delete_completed_tasks.s(),
 #         name='completed tasks deleted'
 #     )

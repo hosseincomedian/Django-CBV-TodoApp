@@ -158,5 +158,4 @@ EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 25
 
 
-CELERY_BROKER_URL = 'redis://redis:6379/1'
-
+CELERY_BROKER_URL = "redis://redis:6379/1"

@@ -16,6 +16,3 @@ urlpatterns = [
     path("delete/<int:pk>/", TodoDeleteView.as_view(), name="todo-delete"),
     path("api/v1/", include("todo.api.v1.urls")),
 ]
-
-
-
