@@ -4,13 +4,13 @@ from .serializers import TodoSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from .paginations import DefaultPagination
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsTodoUser
 
 
 class TodoModelViewSet(ModelViewSet):
     permission_classes = (
-        IsAuthenticated,
+        IsAuthenticatedOrReadOnly,
         IsTodoUser,
     )
     model = Todo
