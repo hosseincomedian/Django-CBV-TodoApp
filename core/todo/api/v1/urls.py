@@ -8,5 +8,9 @@ router.register("todo", TodoModelViewSet)
 urlpatterns = router.urls
 
 urlpatterns += [
-    path('climatic-condition', ClimaticConditionAPIGenericView.as_view(), name='climatic-condition')
+    path(
+        "climatic-condition",
+        ClimaticConditionAPIGenericView.as_view(),
+        name="climatic-condition",
+    )
 ]
