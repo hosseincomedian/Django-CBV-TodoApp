@@ -1,4 +1,4 @@
-django
+django >3.2,<3.3
 python-decouple
 pillow
 djangorestframework
@@ -16,5 +16,4 @@ pytest-django
 Faker
 celery
 django-redis
-gunicorns
 gunicorn
