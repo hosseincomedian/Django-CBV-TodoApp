@@ -16,3 +16,5 @@ pytest-django
 Faker
 celery
 django-redis
+gunicorns
+gunicorn

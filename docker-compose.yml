@@ -29,15 +29,15 @@ services:
     depends_on:
       - redis 
       - backend
-  celery_periodic_run:
-    build: .
-    command: celery -A core beat -l info 
-    volumes:
-      - ./core:/app
-    depends_on:
-      - redis 
-      - backend
-      - worker
+  # celery_periodic_run:
+  #   build: .
+  #   command: celery -A core beat -l info 
+  #   volumes:
+  #     - ./core:/app
+  #   depends_on:
+  #     - redis 
+  #     - backend
+  #     - worker
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
