@@ -10,7 +10,7 @@ class Todo(models.Model):
     complete = models.BooleanField(default=False)
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
-
+    photo = models.ImageField(upload_to='photo/',blank=True)
     def __str__(self):
         return self.title
 
